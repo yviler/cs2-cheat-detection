@@ -1,0 +1,14 @@
+# raw data and env
+Data/
+venv/
+env_test/
+
+# python-specific ignores
+__pycache__.
+*.pyc
+*.pyo
+*.ipynb_checkpoints/
+
+#ide stuff
+.vscode/
+
