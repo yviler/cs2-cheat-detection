@@ -11,9 +11,10 @@ Detailed folder layout is in the repo root. Key directories:
 - `data/features/` — CSVs with computed velocity, acceleration, jerk, and segment stats.
 - `data/processed/` — Normalized and split datasets ready for model training.
 - `scripts/` — Pipeline scripts, to be run in sequence:
-  1. `01_parse_demos.py`
-  2. `02_engineer_features.py`
-  3. `03_normalize_and_split.py`
+  1. `01_parsing.ipynb`
+  2. `02_process_and_engineering.ipynb`
+  3. `03_visualize.ipynb`
+  4. `04_model.ipynb`
 - `notebooks/` — Jupyter notebooks for EDA and visualization.
 - `models/` — Saved model weights and architectures.
 - `results/` — Training logs, metrics, and plots.
