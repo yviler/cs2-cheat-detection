@@ -1,15 +1,15 @@
-# CS2 Cheat Detection using Neural Networks 🎯
+# CS2 Cheat Detection using Neural Networks 
 
 This project is a proof-of-concept system to detect aimbot-like behavior in CS2 (Counter-Strike 2) matches using machine learning—specifically, an LSTM-based neural network trained on engineered features from in-game demo files.
 
 ---
 
-## 🧠 Overview
+##  Overview
 
-### 🚀 Goal
+### Goal
 To build a neural network that can differentiate between cheater and non-cheater gameplay by analyzing player input data (pitch, yaw, velocity, acceleration, etc.) from `.dem` files.
 
-### 🔄 Pipeline
+### Pipeline
 
 1. **Parsing**
    - `.dem` files are parsed into CSV using `demoparser2`
@@ -29,7 +29,7 @@ To build a neural network that can differentiate between cheater and non-cheater
 
 ---
 
-## 📊 Results (First Test)
+## Results (First Test)
 
 | Metric        | Value                  |
 |---------------|------------------------|
@@ -42,7 +42,7 @@ To build a neural network that can differentiate between cheater and non-cheater
 
 ---
 
-## 🔜 Next Steps
+## Next Steps
 
 - Expand cheater dataset across more sessions and cheat types
 - Tune class weights and decision threshold
@@ -51,14 +51,14 @@ To build a neural network that can differentiate between cheater and non-cheater
 
 ---
 
-## 🧾 Old Version
+## Old Version
 
 The first version of the project (in `old_version/`) featured a more basic parser, simpler processing, and a single-script flow. It is preserved for documentation and evolution tracking.  
-See [`old_version/README.md`](old_version/README.md) for more details.
+See [`old_version/README.md`](old_version/) for more details.
 
 ---
 
-## 📦 Requirements
+## Requirements
 
 - Python 3.8+
 - Jupyter
@@ -66,7 +66,7 @@ See [`old_version/README.md`](old_version/README.md) for more details.
 - TensorFlow or PyTorch
 - pandas, numpy, tqdm, matplotlib
 
-### 🔧 Installation
+### Installation
 
 Install dependencies with:
 
