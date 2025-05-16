@@ -1,16 +1,16 @@
-# 🗂️ Legacy Code: Initial Version of CS2 Cheat Detection
+# Legacy Code: Initial Version of CS2 Cheat Detection
 
 This folder contains the **first iteration** of the CS2 cheat detection project. It was developed as a basic prototype to test the concept of parsing `.dem` files, extracting aiming data, and identifying suspicious behavior using engineered features.
 
 ---
 
-## 🧠 Overview
+## Overview
 
 This early version follows a less modular structure and lacks the scalability and automation of the main version. However, it serves as valuable documentation for the project's evolution.
 
 ---
 
-## ⚙️ What It Did
+## What It Did
 
 - **Parsed `.dem` files manually** using `demoparser2`
   - Hardcoded paths for specific demo files
@@ -23,7 +23,7 @@ This early version follows a less modular structure and lacks the scalability an
 
 ---
 
-## 🔍 Limitations
+## Limitations
 
 - No handling for short segments (< 300 ticks)
 - No input normalization or zero-padding
@@ -32,7 +32,7 @@ This early version follows a less modular structure and lacks the scalability an
 - Not modular: scripts combined parsing, processing, and modeling in one place
 
 
-## 📁 Contents
+## Contents
 
 - `parser.py` – Manual script to parse demo files
 - `engineer.py` – First feature engineering prototype
@@ -42,7 +42,7 @@ This early version follows a less modular structure and lacks the scalability an
 
 ---
 
-## 🔙 See Also
+## See Also
 
 The updated and modular version of the project is available in the main repository root.  
-👉 [Back to Main README](../README.md)
+[Back to Main README](../README.md)
