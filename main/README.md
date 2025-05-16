@@ -8,8 +8,7 @@ Detailed folder layout is in the repo root. Key directories:
 
 - `data/raw/` — Original `.dem` files and external datasets.
 - `data/interim/parsed_csv/` — Parsed tick-by-tick CSVs (before feature engineering).
-- `data/features/` — CSVs with computed velocity, acceleration, jerk, and segment stats.
-- `data/processed/` — Normalized and split datasets ready for model training.
+- `data/processed/features` — Data with feature engineering.
 - `scripts/` — Pipeline scripts, to be run in sequence:
   1. `01_parsing.ipynb`
   2. `02_process_and_engineering.ipynb`
