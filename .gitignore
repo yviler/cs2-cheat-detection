@@ -1,7 +1,8 @@
 # raw data and env
 Data/
 venv/
-env_test/
+data/raw/
+*.dem
 
 # python-specific ignores
 __pycache__.
