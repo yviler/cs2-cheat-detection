@@ -77,9 +77,30 @@ The repository implements a real-time cheat-detection pipeline for CS2 using LST
 - TensorFlow or PyTorch  
 - pandas, numpy, tqdm, matplotlib  
 
-### Installation
+## Installation
 
-Install dependencies with:
+Follow the steps below to set up this project locally:
+
+### 1. Clone the repository
 
 ```bash
+git clone https://github.com/yviler/cs2-cheat-detection.git
+cd cs2-cheat-detection
+```
+
+### 2. Create virtual environment
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+or on Windows
+``` bash
+venv\Scripts\activate
+```
+
+### 3. Install the dependencies
+```bash
+pip install --upgrade pip
 pip install -r requirements.txt
+```
