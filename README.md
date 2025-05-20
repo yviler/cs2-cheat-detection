@@ -56,7 +56,7 @@ The repository implements a real-time cheat-detection pipeline for CS2 using LST
 - `notebooks/` — Jupyter notebooks for exploratory data analysis and visualization.  
 - `models/` — Saved model weights and architectures.  
 - `results/` — Training logs, metrics, and plots.  
-- `old_version/` — The first version of the project with a simpler flow and parser, kept for documentation and evolution tracking.
+- `legacy_ver/` — The first version of the project with a simpler flow and parser, kept for documentation and evolution tracking.
 
 ---
 
@@ -73,7 +73,7 @@ The repository implements a real-time cheat-detection pipeline for CS2 using LST
 
 - Python 3.8+  
 - Jupyter  
-- `demoparser2`  
+- demoparser2  
 - TensorFlow or PyTorch  
 - pandas, numpy, tqdm, matplotlib  
 
