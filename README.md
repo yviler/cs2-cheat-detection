@@ -50,12 +50,11 @@ The repository implements a real-time cheat-detection pipeline for CS2 using LST
 - `data/interim/parsed_csv/` — Parsed tick-by-tick CSVs (before feature engineering).  
 - `data/processed/features/` — Feature-engineered datasets.  
 - `scripts/` — Pipeline scripts to run in sequence:  
-  1. `01_parse_demos.py`  
-  2. `02_engineer_features.py`  
-  3. `03_normalize_and_split.py`  
+  1. `00_listSteamid.py`
+  2. `01_parser.py`  
+  3. `02_process_and_engineer.py`  
+  4. `03_model.py`  
 - `notebooks/` — Jupyter notebooks for exploratory data analysis and visualization.  
-- `models/` — Saved model weights and architectures.  
-- `results/` — Training logs, metrics, and plots.  
 - `legacy_ver/` — The first version of the project with a simpler flow and parser, kept for documentation and evolution tracking.
 
 ---
