@@ -2,6 +2,7 @@ import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import classification_report, confusion_matrix, ConfusionMatrixDisplay
 from sklearn.model_selection import train_test_split
@@ -78,8 +79,8 @@ if __name__ == "__main__":
     X_pred = model.predict(X_scaled)
     mse = np.mean(np.square(X_scaled - X_pred), axis=(1, 2))
 
-    threshold = np.percentile(mse[y == 0], 80)
-    print(f"🔎 Threshold (95th percentile of legit): {threshold:.6f}")
+    threshold = np.percentile(mse[y == 0], 70)
+    print(f"🔎 Threshold (70th percentile of legit): {threshold:.6f}")
 
     y_pred = (mse > threshold).astype(int)
 
@@ -92,3 +93,12 @@ if __name__ == "__main__":
     plt.title("Autoencoder Confusion Matrix")
     plt.tight_layout()
     plt.show()
+
+    sns.kdeplot(mse[y == 0], label="Legit")
+    sns.kdeplot(mse[y == 1], label="Cheat")
+    plt.axvline(threshold, color='red', linestyle='--', label='Threshold')
+    plt.legend()
+    plt.title("Reconstruction Error Distributions")
+    plt.xlabel("MSE")
+    plt.show()
+

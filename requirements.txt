@@ -1,0 +1,7 @@
+pandas
+numpy
+matplotlib
+scipy
+scikit-learn
+tensorflow  # or torch
+demoparser2  # parser dependency
