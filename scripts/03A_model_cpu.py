@@ -32,9 +32,8 @@ def load_dataset(base_dir, target_len=300):
                         y.append(label)
 
                 except Exception as e:
-                    print(f"❌ Error reading {file_path}: {e}")
+                    print(f"❌ Error reading {file}: {e}")
     return np.array(X), np.array(y)
-
 
 # Load dataset
 print("📥 Loading dataset...")
@@ -78,14 +77,15 @@ model = Sequential([
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 model.summary()
 
-# Train model
-print("🚀 Training model...")
-history = model.fit(
-    X_train, y_train,
-    validation_data=(X_val, y_val),
-    epochs=20,
-    batch_size=64
-)
+# Train model on CPU with batch_size=8
+print("🚀 Training model on CPU with batch size 8...")
+with tf.device('/CPU:0'):
+    history = model.fit(
+        X_train, y_train,
+        validation_data=(X_val, y_val),
+        epochs=20,
+        batch_size=8
+    )
 
 # Evaluate model
 print("\n📈 Evaluating on test set...")
@@ -100,4 +100,3 @@ disp.plot(cmap='Blues', values_format='d')
 plt.title("Confusion Matrix on Test Set")
 plt.tight_layout()
 plt.show()
-
