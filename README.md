@@ -46,9 +46,10 @@ To build a neural network that can differentiate between cheater and non-cheater
 
 The repository implements a real-time cheat-detection pipeline for CS2 using LSTM networks on parsed pitch/yaw data. The main folders and files include:
 
-- `data/raw/` — Original `.dem` files and external datasets.  
-- `data/interim/parsed_csv/` — Parsed tick-by-tick CSVs (before feature engineering).  
-- `data/processed/features/` — Feature-engineered datasets.  
+- `data` — Data root directory
+   - `/raw/` — Original `.dem` files and external datasets.  
+   - `/interim/parsed_csv/` — Parsed tick-by-tick CSVs (before feature engineering).  
+   - `/processed/features/` — Feature-engineered datasets.  
 - `scripts/` — Pipeline scripts to run in sequence:  
   1. `00_listSteamid.py`
   2. `01_parser.py`  
@@ -73,7 +74,7 @@ The repository implements a real-time cheat-detection pipeline for CS2 using LST
 - Python 3.8+  
 - Jupyter  
 - demoparser2  
-- TensorFlow or PyTorch  
+- TensorFlow  
 - pandas, numpy, tqdm, matplotlib  
 
 ## Installation
@@ -105,5 +106,14 @@ pip install -r requirements.txt
 ```
 
 ## Running the Project
-### Execute the pipeline through the notebooks
+### 1. (Optional) Insert data into `data/raw/`
+### 2. Execute the data scripts pipeline
+```bash
+python scripts/01_parser.py
+python scripts/02_process_and_engineer.py
+```
+### 3. Execute the Model script
+```bash
+python scripts/03_model.py
+```
 
