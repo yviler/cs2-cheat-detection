@@ -15,25 +15,26 @@ def load_dataset(base_dir, target_len=300):
         path = os.path.join(base_dir, category)
         for file in os.listdir(path):
             if file.endswith('.csv'):
-                file_path = os.path.join(path, file)
                 try:
-                    df = pd.read_csv(file_path)
-                    features = df.drop(columns=['tick', 'steamid', 'label'], errors='ignore')
+                    df = pd.read_csv(os.path.join(path, file))
 
-                    if features.shape[0] >= 290:
-                        # Pad to length
-                        if features.shape[0] < target_len:
-                            pad_rows = target_len - features.shape[0]
-                            last_row = features.iloc[-1:]
+                    # Drop non-numeric / irrelevant columns
+                    df = df.drop(columns=["tick", "steamid", "label", "weapon_name", "weapon_type"], errors="ignore")
+
+                    if df.shape[0] >= 290:
+                        if df.shape[0] < target_len:
+                            pad_rows = target_len - df.shape[0]
+                            last_row = df.iloc[[-1]].copy()
                             padding = pd.concat([last_row] * pad_rows, ignore_index=True)
-                            features = pd.concat([features, padding], ignore_index=True)
+                            df = pd.concat([df, padding], ignore_index=True)
 
-                        X.append(features.values[:target_len])
+                        X.append(df.values[:target_len])
                         y.append(label)
+
                 except Exception as e:
                     print(f"❌ Error reading {file_path}: {e}")
-
     return np.array(X), np.array(y)
+
 
 # Load dataset
 print("📥 Loading dataset...")

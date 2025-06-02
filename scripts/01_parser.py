@@ -3,6 +3,28 @@ import pandas as pd
 from demoparser2 import DemoParser
 from tqdm import tqdm
 
+
+def map_weapon_group(weapon_name):
+    if not isinstance(weapon_name, str):
+        return "unknown"
+    weapon_name = weapon_name.lower()
+    if any(w in weapon_name for w in ["deagle", "glock", "usp", "p250", "tec9", "cz75", "five", "revolver"]):
+        return "pistol"
+    elif any(w in weapon_name for w in ["ak47", "m4a", "galil", "famas", "aug", "sg", "scar", "bizon"]):
+        return "rifle"
+    elif any(w in weapon_name for w in ["awp", "ssg", "scout"]):
+        return "sniper"
+    elif any(w in weapon_name for w in ["ump", "mac", "mp7", "mp9", "mp5"]):
+        return "smg"
+    elif any(w in weapon_name for w in ["m249", "negev"]):
+        return "lmg"
+    elif any(w in weapon_name for w in ["nova", "xm", "mag", "sawedoff"]):
+        return "shotgun"
+    elif any(w in weapon_name for w in ["knife", "zeus"]):
+        return "melee"
+    else:
+        return "unknown"
+
 def parse_demo_folder(input_dir, cheater_ids, output_dir):
     base_dir = os.path.join(output_dir)
     os.makedirs(base_dir, exist_ok=True)
@@ -10,6 +32,7 @@ def parse_demo_folder(input_dir, cheater_ids, output_dir):
     for filename in tqdm(os.listdir(input_dir), desc="Parsing demos"):
         if not filename.endswith('.dem'):
             continue
+
         demo_path = os.path.join(input_dir, filename)
         demo_base = os.path.splitext(filename)[0]
 
@@ -20,9 +43,17 @@ def parse_demo_folder(input_dir, cheater_ids, output_dir):
             df = parser.parse_ticks(["pitch", "yaw", "tick", "steamid"])
 
             for _, event in events.iterrows():
+                attacker = event.get("attacker_steamid")
+                weapon = event.get("weapon", "unknown")
+                weapon_group = map_weapon_group(weapon)
+
+                # Skip environmental/unusable deaths
+                if weapon_group == "unknown" or weapon.lower() == "world":
+                    continue
+
                 start_tick = event["tick"] - 300
                 end_tick = event["tick"]
-                attacker = event.get("attacker_steamid")
+
                 if not attacker:
                     continue
 
@@ -47,6 +78,8 @@ def parse_demo_folder(input_dir, cheater_ids, output_dir):
                 )
                 window["steamid"] = attacker_int
                 window["label"] = label
+                window["weapon_name"] = weapon
+                window["weapon_type"] = weapon_group
 
                 subfolder = "cheater" if label == 1 else "legit"
                 user_dir = os.path.join(base_dir, subfolder, f"user_{attacker}")
@@ -58,7 +91,7 @@ def parse_demo_folder(input_dir, cheater_ids, output_dir):
                 print(f"  → Saved {csv_path}")
 
         except Exception as e:
-            print(f"Failed to parse {filename}: {e}")
+            print(f"❌ Failed to parse {filename}: {e}")
 
 if __name__ == "__main__":
     cheater_ids = {
