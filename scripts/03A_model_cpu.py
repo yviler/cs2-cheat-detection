@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dropout, Dense
+from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
 
 def load_dataset(base_dir, target_len=300):
     X, y = [], []
@@ -77,6 +78,7 @@ model = Sequential([
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 model.summary()
 
+'''
 # Train model on CPU with batch_size=8
 print("🚀 Training model on CPU with batch size 8...")
 with tf.device('/CPU:0'):
@@ -86,6 +88,37 @@ with tf.device('/CPU:0'):
         epochs=20,
         batch_size=8
     )
+
+# Evaluate model
+print("\n📈 Evaluating on test set...")
+y_pred = (model.predict(X_test) > 0.5).astype(int)
+print(classification_report(y_test, y_pred))
+
+# Confusion Matrix
+cm = confusion_matrix(y_test, y_pred, labels=[0, 1])
+disp = ConfusionMatrixDisplay(cm, display_labels=["Legit", "Cheat"])
+plt.figure(figsize=(4, 4))
+disp.plot(cmap='Blues', values_format='d')
+plt.title("Confusion Matrix on Test Set")
+plt.tight_layout()
+plt.show()
+
+'''
+# Create callbacks
+checkpoint_cb = ModelCheckpoint("models/lstm_cheat_detector.keras", save_best_only=True)
+earlystop_cb = EarlyStopping(monitor="val_loss", patience=5, restore_best_weights=True)
+
+# Fit model
+with tf.device('/CPU:0'):
+    history = model.fit(
+        X_train, y_train,
+        validation_data=(X_val, y_val),
+        epochs=20,
+        batch_size=8,
+        callbacks=[checkpoint_cb, earlystop_cb], 
+        verbose=1
+    )
+
 
 # Evaluate model
 print("\n📈 Evaluating on test set...")
