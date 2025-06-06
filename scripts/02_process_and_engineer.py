@@ -15,6 +15,9 @@ weapon_encoder.fit(np.array(WEAPON_GROUPS).reshape(-1, 1))
 def engineer_features(df):
     df = df.copy()
 
+    if 'steamid' in df.columns:
+        df = df.drop(columns=['steamid'])
+        
     # Derivatives
     df['pitch_velocity'] = df['pitch'].diff() / df['tick'].diff()
     df['yaw_velocity'] = df['yaw'].diff() / df['tick'].diff()
