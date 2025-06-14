@@ -8,7 +8,8 @@ from tqdm import tqdm
 def euclidean_distance(x1, y1, x2, y2):
     return np.sqrt((x2 - x1)**2 + (y2 - y1)**2)
 
-def parse_demo_folder(input_dir, cheater_ids, output_dir):
+
+def parse_demo_folder(input_dir, cheater_ids, blacklist_ids, output_dir):
     os.makedirs(output_dir, exist_ok=True)
 
     for filename in tqdm(os.listdir(input_dir), desc="Parsing demos"):
@@ -28,6 +29,9 @@ def parse_demo_folder(input_dir, cheater_ids, output_dir):
                 tick = event["tick"]
 
                 if not attacker or not victim:
+                    continue
+
+                if int(attacker) in blacklist_ids:
                     continue
 
                 attacker_int = int(attacker)
@@ -117,10 +121,10 @@ def parse_demo_folder(input_dir, cheater_ids, output_dir):
                 csv_name = f"{demo_base}_kill_{start_tick}_to_{end_tick}.csv"
                 csv_path = os.path.join(user_dir, csv_name)
                 attacker_window.to_csv(csv_path, index=False)
-                print(f"✅ Saved {csv_path}")
+                print(f"Saved {csv_path}")
 
         except Exception as e:
-            print(f"❌ Failed to parse {filename}: {e}")
+            print(f"Failed to parse {filename}: {e}")
 
 def map_weapon_group(weapon_name):
     if not isinstance(weapon_name, str):
@@ -142,6 +146,7 @@ def map_weapon_group(weapon_name):
         return "melee"
     else:
         return "unknown"
+    
 if __name__ == "__main__":
     cheater_ids = {
         76561199038314474,
@@ -163,10 +168,36 @@ if __name__ == "__main__":
         76561199496724417,
         76561199849777985,
         76561199041458671,
+        76561199101688540,
+        76561199706491208,
+        76561199832433151,
+        76561199842141622,
+        76561199634405619,
+        76561199595345530,
+        76561198145554926,
+        76561198387960536,
+        76561199849680237,
+        76561199386218874,
+    }
+
+    blacklist_ids = {
+        76561199548957864,
+        76561198816573014,
+        76561198272549077,
+        76561198289804150,
+        76561198110762232,
+        76561199817843947,
+        76561199625376224,
     }
 
     output_dir = "data/interim/parsed_csv"
 
     for folder in ["mixed", "cheater", "legit"]:
         input_dir = os.path.join("data/raw/demos", folder)
-        parse_demo_folder(input_dir=input_dir, cheater_ids=cheater_ids, output_dir=output_dir)
+        print(f"📂 Parsing folder: {input_dir}")
+        parse_demo_folder(
+            input_dir=input_dir,
+            cheater_ids=cheater_ids,
+            blacklist_ids=blacklist_ids,
+            output_dir=output_dir
+        )
