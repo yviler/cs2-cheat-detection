@@ -115,8 +115,8 @@ if __name__ == "__main__":
     legit_output = os.path.join(base_output, "legit")
 
     # Process both categories
-    print("⚙️ Processing cheater segments...")
+    print("Processing cheater segments...")
     process_all_segments(cheater_input, cheater_output, "cheater")
 
-    print("⚙️ Processing legit segments...")
+    print("Processing legit segments...")
     process_all_segments(legit_input, legit_output, "legit")

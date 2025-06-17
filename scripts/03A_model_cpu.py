@@ -37,28 +37,28 @@ def load_dataset(base_dir, target_len=300):
     return np.array(X), np.array(y)
 
 # Load dataset
-print("📥 Loading dataset...")
+print("Loading dataset...")
 X, y = load_dataset("data/processed/features")
 print(f"📊 Feature shape: {X.shape}, Labels: {y.shape}")
 
 # Normalize features
-print("🧪 Scaling features...")
+print("Scaling features...")
 X_flat = X.reshape(-1, X.shape[-1])
 scaler = StandardScaler()
 X_scaled_flat = scaler.fit_transform(X_flat)
 X_scaled = X_scaled_flat.reshape(X.shape)
 
 # Train/val/test split
-print("🧪 Splitting data...")
+print("Splitting data...")
 X_train, X_temp, y_train, y_temp = train_test_split(
     X_scaled, y, test_size=0.3, stratify=y, random_state=42)
 
 X_val, X_test, y_val, y_test = train_test_split(
     X_temp, y_temp, test_size=0.5, stratify=y_temp, random_state=42)
 
-print(f"✅ Train: {X_train.shape}")
-print(f"✅ Val:   {X_val.shape}")
-print(f"✅ Test:  {X_test.shape}")
+print(f"Train: {X_train.shape}")
+print(f"Val:   {X_val.shape}")
+print(f"Test:  {X_test.shape}")
 
 # Show class balance
 counts = np.bincount(y)
@@ -67,7 +67,7 @@ print(f"  Legit: {counts[0]}")
 print(f"  Cheat: {counts[1]}\n")
 
 # Build model
-print("🧠 Building model...")
+print("Building model...")
 model = Sequential([
     LSTM(64, return_sequences=True, dropout=0.3, recurrent_dropout=0.2, input_shape=(X.shape[1], X.shape[2])),
     LSTM(32, dropout=0.3, recurrent_dropout=0.2),
@@ -78,32 +78,6 @@ model = Sequential([
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 model.summary()
 
-'''
-# Train model on CPU with batch_size=8
-print("🚀 Training model on CPU with batch size 8...")
-with tf.device('/CPU:0'):
-    history = model.fit(
-        X_train, y_train,
-        validation_data=(X_val, y_val),
-        epochs=20,
-        batch_size=8
-    )
-
-# Evaluate model
-print("\n📈 Evaluating on test set...")
-y_pred = (model.predict(X_test) > 0.5).astype(int)
-print(classification_report(y_test, y_pred))
-
-# Confusion Matrix
-cm = confusion_matrix(y_test, y_pred, labels=[0, 1])
-disp = ConfusionMatrixDisplay(cm, display_labels=["Legit", "Cheat"])
-plt.figure(figsize=(4, 4))
-disp.plot(cmap='Blues', values_format='d')
-plt.title("Confusion Matrix on Test Set")
-plt.tight_layout()
-plt.show()
-
-'''
 # Create callbacks
 checkpoint_cb = ModelCheckpoint("models/lstm_cheat_detector.keras", save_best_only=True)
 earlystop_cb = EarlyStopping(monitor="val_loss", patience=5, restore_best_weights=True)
@@ -121,7 +95,7 @@ with tf.device('/CPU:0'):
 
 
 # Evaluate model
-print("\n📈 Evaluating on test set...")
+print("\nEvaluating on test set...")
 y_pred = (model.predict(X_test) > 0.5).astype(int)
 print(classification_report(y_test, y_pred))
 

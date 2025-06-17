@@ -178,6 +178,17 @@ if __name__ == "__main__":
         76561198387960536,
         76561199849680237,
         76561199386218874,
+        76561198797284130,
+        76561199848160718,
+        76561199849614767,
+        76561199786769474,
+        76561198883318658,
+        76561198388821490,
+        76561198881468827,
+        76561198812845836,
+        76561199592296329,
+        76561199481952517,
+        76561199417279678,
     }
 
     blacklist_ids = {
@@ -188,13 +199,15 @@ if __name__ == "__main__":
         76561198110762232,
         76561199817843947,
         76561199625376224,
+        76561198148071068,
+        76561199721706275,
     }
 
     output_dir = "data/interim/parsed_csv"
 
     for folder in ["mixed", "cheater", "legit"]:
         input_dir = os.path.join("data/raw/demos", folder)
-        print(f"📂 Parsing folder: {input_dir}")
+        print(f"Parsing folder: {input_dir}")
         parse_demo_folder(
             input_dir=input_dir,
             cheater_ids=cheater_ids,
